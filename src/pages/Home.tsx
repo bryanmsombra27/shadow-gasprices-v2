@@ -1,16 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { CurrentLocation } from "@/components";
 import type { FC } from "react";
 
 interface HomeProps {}
 const Home: FC<HomeProps> = ({}) => {
   return (
     <>
-      <Button
-        variant="default"
-        className="cursor-pointer"
-      >
-        kesero
-      </Button>
+      <div className="flex my-10 mx-auto justify-end container px-20">
+        <CurrentLocation />
+      </div>
     </>
   );
 };
