@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { GrMapLocation } from "react-icons/gr";
 import { uselocationStore } from "@/store/location";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
 
 interface CurrentLocationProps {}
 const CurrentLocation: FC<CurrentLocationProps> = ({}) => {
