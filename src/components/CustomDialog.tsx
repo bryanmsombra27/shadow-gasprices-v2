@@ -16,7 +16,7 @@ const CustomDialog: FC<CustomDialogProps> = ({ children, trigger }) => {
   return (
     <Dialog>
       {trigger}
-      <DialogContent className="flex">{children}</DialogContent>
+      <DialogContent className="flex ">{children}</DialogContent>
     </Dialog>
   );
 };

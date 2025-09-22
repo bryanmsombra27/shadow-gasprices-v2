@@ -1,11 +1,18 @@
-import type { FC } from "react";
+import type { ComponentProps, FC } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-interface LoginProps {}
-const Login: FC<LoginProps> = ({}) => {
+interface LoginProps extends ComponentProps<"form"> {
+  isPage?: boolean;
+}
+const Login: FC<LoginProps> = ({ isPage = true, className, ...props }) => {
   return (
     <>
-      <form className="p-10 gap-5 w-[500px] flex flex-col border-2  rounded-3xl justify-center mx-auto mt-20 shadow-lg">
+      <form
+        className={`p-10 gap-5 w-[500px] flex flex-col border-2  rounded-3xl justify-center mx-auto  shadow-lg ${className} ${
+          isPage ? "mt-20" : ""
+        } `}
+        {...props}
+      >
         <h1 className="text-center font-bold text-2xl ">Inicia Sesión</h1>
         <Input
           name="email"

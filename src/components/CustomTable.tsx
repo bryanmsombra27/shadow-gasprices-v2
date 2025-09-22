@@ -64,7 +64,10 @@ const CustomTable: FC<CustomTableProps> = ({ gasStations }) => {
                   </DialogTrigger>
                 }
               >
-                <Login />
+                <Login
+                  className="border-none shadow-none mt-2"
+                  isPage={false}
+                />
               </CustomDialog>
             </TableCell>
           </TableRow>
