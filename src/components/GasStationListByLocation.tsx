@@ -12,10 +12,7 @@ const GasStationListByLocation: FC<GasStationListByLocationProps> = ({
   const { data, isPending, error, mutateAsync } = getStationsByLocation;
 
   useEffect(() => {
-    console.log("ENTRA", location);
     if (location.length > 0) {
-      console.log("ENTRA", location);
-
       mutateAsync(location);
     }
   }, [location, mutateAsync]);

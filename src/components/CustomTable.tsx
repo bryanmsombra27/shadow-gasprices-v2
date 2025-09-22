@@ -11,6 +11,9 @@ import {
 import type { Place } from "@/interfaces/gas_station.interface";
 import { GrMapLocation } from "react-icons/gr";
 import { FaRegComments } from "react-icons/fa";
+import CustomDialog from "./CustomDialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import Login from "@/pages/Login";
 interface CustomTableProps {
   gasStations: Place[];
 }
@@ -50,10 +53,19 @@ const CustomTable: FC<CustomTableProps> = ({ gasStations }) => {
                 size={24}
                 className="cursor-pointer"
               />
-              <FaRegComments
-                size={24}
-                className="cursor-pointer"
-              />
+
+              <CustomDialog
+                trigger={
+                  <DialogTrigger asChild>
+                    <FaRegComments
+                      size={24}
+                      className="cursor-pointer"
+                    />
+                  </DialogTrigger>
+                }
+              >
+                <Login />
+              </CustomDialog>
             </TableCell>
           </TableRow>
         ))}
