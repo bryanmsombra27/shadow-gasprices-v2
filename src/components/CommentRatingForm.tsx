@@ -3,14 +3,20 @@ import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
 import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
+import type { Place } from "@/interfaces/gas_station.interface";
+import useRating from "@/hooks/useRating";
 
 type Inputs = {
   comments: string;
   rating: number[];
 };
 
-interface CommentRatingFormProps {}
-const CommentRatingForm: FC<CommentRatingFormProps> = ({}) => {
+interface CommentRatingFormProps {
+  place: Place;
+}
+const CommentRatingForm: FC<CommentRatingFormProps> = ({ place }) => {
+  const { createRating } = useRating();
+
   const {
     register,
     handleSubmit,
@@ -22,7 +28,13 @@ const CommentRatingForm: FC<CommentRatingFormProps> = ({}) => {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    createRating({
+      comments: data.comments,
+      place_id: place.price_place_id!,
+      rating: data.rating[0],
+    });
+  };
 
   return (
     <form
@@ -67,7 +79,7 @@ const CommentRatingForm: FC<CommentRatingFormProps> = ({}) => {
                 step={1}
                 min={1}
                 value={field.value}
-                className="text-yellow-400"
+                className="text-yellow-600"
                 onValueChange={field.onChange}
               />
               <div className="flex justify-between mt-2">
