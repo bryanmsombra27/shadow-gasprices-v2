@@ -1,3 +1,4 @@
+import type { CommentRatingResponse } from "@/interfaces/comment";
 import { gasapi } from "@/lib/axios";
 
 export interface CreateRating {
@@ -12,6 +13,16 @@ export const createRatingAction = async (body: CreateRating) => {
     comments: body.comments,
     rating: body.rating,
   });
+
+  return data;
+};
+
+export const getRatingAction = async (
+  gasSation: string
+): Promise<CommentRatingResponse> => {
+  const { data } = await gasapi.get<CommentRatingResponse>(
+    `/ratings/comment?gas_station=${gasSation}`
+  );
 
   return data;
 };

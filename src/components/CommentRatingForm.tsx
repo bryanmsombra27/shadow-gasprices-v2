@@ -1,10 +1,11 @@
-import type { FC } from "react";
+import { useEffect, type FC } from "react";
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
 import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
 import type { Place } from "@/interfaces/gas_station.interface";
 import useRating from "@/hooks/useRating";
+import useGetRating from "@/hooks/useGetRating";
 
 type Inputs = {
   comments: string;
@@ -16,10 +17,12 @@ interface CommentRatingFormProps {
 }
 const CommentRatingForm: FC<CommentRatingFormProps> = ({ place }) => {
   const { createRating } = useRating();
+  const { data } = useGetRating(place.price_place_id ?? "");
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     control,
   } = useForm<Inputs>({
@@ -27,6 +30,12 @@ const CommentRatingForm: FC<CommentRatingFormProps> = ({ place }) => {
       rating: [1],
     },
   });
+
+  useEffect(() => {
+    if (data?.comment.rating) {
+      setValue("rating", [data?.comment?.rating]);
+    }
+  }, [data]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     createRating({
@@ -52,6 +61,7 @@ const CommentRatingForm: FC<CommentRatingFormProps> = ({ place }) => {
         <Textarea
           placeholder="Ingresa tus comentarios..."
           {...register("comments", { required: true })}
+          defaultValue={data?.comment.comment ?? ""}
         />
         {errors.comments && (
           <span className="text-sm text-red-500 font-semibold mt-3">
@@ -83,10 +93,13 @@ const CommentRatingForm: FC<CommentRatingFormProps> = ({ place }) => {
                 onValueChange={field.onChange}
               />
               <div className="flex justify-between mt-2">
-                {Array.from({ length: 5 }).map((val, index) => (
+                {Array.from({ length: 5 }).map((_, index) => (
                   <p
                     className={`${
-                      field.value[0] == index + 1 ? "text-yellow-500 " : ""
+                      field.value[0] == index + 1 ||
+                      data?.comment.rating == index + 1
+                        ? "text-yellow-500 "
+                        : ""
                     }`}
                   >
                     {index + 1}
