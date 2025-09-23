@@ -1,16 +1,20 @@
 import { createRatingAction } from "@/actions/createRatingAction";
 import { useauthStore } from "@/store/auth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { toast } from "sonner";
 
 const useRating = () => {
   const { setToken, setAuthState } = useauthStore();
+  const queryClient = useQueryClient();
   const { mutateAsync } = useMutation({
     mutationFn: createRatingAction,
     mutationKey: ["rating"],
     onMutate: () => {},
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["rating_by_user"],
+      });
       toast.success("Tu comentario fue realizado con exito!");
     },
     onError: (err: AxiosError) => {
