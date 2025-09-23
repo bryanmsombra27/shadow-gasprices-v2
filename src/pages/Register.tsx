@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useRegister from "@/hooks/useRegister";
 import type { LoginForm } from "@/interfaces/loginForm";
+import { useauthStore } from "@/store/auth";
 import type { ComponentProps, FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link } from "react-router";
@@ -26,7 +27,7 @@ const Register: FC<RegisterProps> = ({
     watch,
   } = useForm<RegisterForm>();
   const { registerAccount } = useRegister();
-
+  const { authState } = useauthStore();
   const onSubmit: SubmitHandler<RegisterForm> = (data) => {
     registerAccount({
       email: data.email,
@@ -90,6 +91,12 @@ const Register: FC<RegisterProps> = ({
         <Button
           type="submit"
           variant="default"
+          disabled={authState == "authenticating" ? true : false}
+          className={
+            authState == "authenticating"
+              ? "pointer-events-none cursor-not-allowed opacity-10"
+              : ""
+          }
         >
           Registrarse
         </Button>{" "}
