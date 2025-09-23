@@ -3,7 +3,7 @@ import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
 import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
-import type { Place } from "@/interfaces/gas_station.interface";
+import type { GasStation, Place } from "@/interfaces/gas_station.interface";
 import useRating from "@/hooks/useRating";
 import useGetRating from "@/hooks/useGetRating";
 

@@ -1,4 +1,5 @@
-import { CurrentLocation } from "@/components";
+import { CurrentLocation, Filters } from "@/components";
+import GasStationList from "@/components/GasStationList";
 import GasStationListByLocation from "@/components/GasStationListByLocation";
 import { uselocationStore } from "@/store/location";
 import type { FC } from "react";
@@ -15,6 +16,11 @@ const Home: FC<HomeProps> = ({}) => {
         <CurrentLocation />
       </div>
       <main className="container mx-auto px-20">
+        <div className="flex justify-end">
+          <Filters />
+        </div>
+        <GasStationList />
+
         <GasStationListByLocation location={location} />
       </main>
     </>

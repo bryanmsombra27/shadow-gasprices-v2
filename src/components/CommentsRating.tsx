@@ -3,7 +3,7 @@ import { FaRegComments } from "react-icons/fa";
 import CustomDialog from "./CustomDialog";
 import { DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import Login from "@/pages/Login";
-import type { Place } from "@/interfaces/gas_station.interface";
+import type { GasStation, Place } from "@/interfaces/gas_station.interface";
 import { useauthStore } from "@/store/auth";
 import { CommentsRatingForm, Spinner } from ".";
 
