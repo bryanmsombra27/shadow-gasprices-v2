@@ -1,28 +1,39 @@
-import type { ComponentProps, FC } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import useRegister from "@/hooks/useRegister";
 import type { LoginForm } from "@/interfaces/loginForm";
-import useLogin from "@/hooks/useLogin";
+import type { ComponentProps, FC } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link } from "react-router";
-interface LoginProps extends ComponentProps<"form"> {
+
+interface RegisterForm extends LoginForm {
+  confirm_password: string;
+}
+
+interface RegisterProps extends ComponentProps<"form"> {
   isPage?: boolean;
 }
 
-const Login: FC<LoginProps> = ({ isPage = true, className, ...props }) => {
+const Register: FC<RegisterProps> = ({
+  isPage = true,
+  className,
+  ...props
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>();
-  const { login } = useLogin();
+    watch,
+  } = useForm<RegisterForm>();
+  const { registerAccount } = useRegister();
 
-  const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    login({
+  const onSubmit: SubmitHandler<RegisterForm> = (data) => {
+    registerAccount({
       email: data.email,
       password: data.password,
     });
   };
+  const password = watch("password"); // 👈 observar el valor de "password"
 
   return (
     <>
@@ -33,7 +44,7 @@ const Login: FC<LoginProps> = ({ isPage = true, className, ...props }) => {
         } `}
         {...props}
       >
-        <h1 className="text-center font-bold text-2xl ">Inicia Sesión</h1>
+        <h1 className="text-center font-bold text-2xl ">Registrate</h1>
         <div>
           <Input
             placeholder="Ingresa tu email..."
@@ -58,20 +69,38 @@ const Login: FC<LoginProps> = ({ isPage = true, className, ...props }) => {
             </span>
           )}
         </div>
+        <div>
+          <Input
+            placeholder="Confirma tu contraseña"
+            type="password"
+            {...register("confirm_password", {
+              required: true,
+              minLength: 6,
+              validate: (value) =>
+                value === password || "Las contraseñas no coinciden",
+            })}
+          />
+          {errors.confirm_password && (
+            <span className="text-sm text-red-500 font-semibold mt-3">
+              {errors.confirm_password.message ||
+                "Las contraseñas no coinciden"}
+            </span>
+          )}
+        </div>
         <Button
           type="submit"
           variant="default"
         >
-          Ingresar{" "}
+          Registrarse
         </Button>{" "}
         <div className="flex  gap-5 items-center flex-end w-full mt-5">
-          <span>¿No tienes una cuenta?</span>
-          <Link to="/register">
+          <span>¿Ya tienes una cuenta?</span>
+          <Link to="/login">
             <Button
               type="button"
               variant="default"
             >
-              Registrate
+              Inicia Sesion
             </Button>{" "}
           </Link>
         </div>
@@ -80,4 +109,4 @@ const Login: FC<LoginProps> = ({ isPage = true, className, ...props }) => {
   );
 };
 
-export default Login;
+export default Register;

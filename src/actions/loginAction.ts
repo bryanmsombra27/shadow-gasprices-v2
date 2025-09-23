@@ -1,4 +1,8 @@
-import type { LoginForm, LoginResponse } from "@/interfaces/loginForm";
+import type {
+  LoginForm,
+  LoginResponse,
+  RegisterResponse,
+} from "@/interfaces/loginForm";
 import { gasapi } from "@/lib/axios";
 
 export const loginAction = async (body: LoginForm): Promise<LoginResponse> => {
@@ -6,5 +10,16 @@ export const loginAction = async (body: LoginForm): Promise<LoginResponse> => {
     email: body.email,
     password: body.password,
   });
+  return data;
+};
+
+export const registerAction = async (
+  body: LoginForm
+): Promise<RegisterResponse> => {
+  const { data } = await gasapi.post<RegisterResponse>("/auth/register", {
+    email: body.email,
+    password: body.password,
+  });
+
   return data;
 };

@@ -7,8 +7,10 @@ export interface CreateRating {
   rating: number;
 }
 
-export const createRatingAction = async (body: CreateRating) => {
-  const { data } = await gasapi.post("/ratings", {
+export const createRatingAction = async (
+  body: CreateRating
+): Promise<CommentRatingResponse> => {
+  const { data } = await gasapi.post<CommentRatingResponse>("/ratings", {
     place_id: body.place_id,
     comments: body.comments,
     rating: body.rating,

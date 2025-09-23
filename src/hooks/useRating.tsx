@@ -11,9 +11,9 @@ const useRating = () => {
     mutationFn: createRatingAction,
     mutationKey: ["rating"],
     onMutate: () => {},
-    onSuccess: () => {
+    onSuccess: (rating) => {
       queryClient.invalidateQueries({
-        queryKey: ["rating_by_user"],
+        queryKey: ["rating_by_user", rating.comment.gasStationId],
       });
       toast.success("Tu comentario fue realizado con exito!");
     },
