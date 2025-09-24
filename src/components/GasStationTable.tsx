@@ -64,10 +64,11 @@ const GasStationTable: FC<GasStationTableProps> = ({ gasStations }) => {
                 className="cursor-pointer"
               />
 
-              {/* <CommentsRating
-                place={station}
+              <CommentsRating
+                place_id={station.place_id}
+                name={station.name}
                 key={station.cre_id}
-              /> */}
+              />
             </TableCell>
           </TableRow>
         ))}

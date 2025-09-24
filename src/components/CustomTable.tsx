@@ -53,7 +53,8 @@ const CustomTable: FC<CustomTableProps> = ({ gasStations }) => {
               />
 
               <CommentsRating
-                place={station}
+                place_id={station.price_place_id!}
+                name={station.name}
                 key={station.cre_id}
               />
             </TableCell>

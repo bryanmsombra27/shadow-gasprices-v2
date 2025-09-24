@@ -1,6 +1,6 @@
 import useAllGasStations from "@/hooks/useAllGasStations";
 import type { FC } from "react";
-import { CustomAlert, CustomTable, Spinner } from "@/components";
+import { CustomAlert, Spinner } from "@/components";
 import GasStationTable from "./GasStationTable";
 interface GasStationListProps {}
 const GasStationList: FC<GasStationListProps> = ({}) => {

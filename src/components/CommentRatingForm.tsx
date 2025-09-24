@@ -3,7 +3,6 @@ import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
 import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
-import type { GasStation, Place } from "@/interfaces/gas_station.interface";
 import useRating from "@/hooks/useRating";
 import useGetRating from "@/hooks/useGetRating";
 
@@ -13,11 +12,12 @@ type Inputs = {
 };
 
 interface CommentRatingFormProps {
-  place: Place;
+  // place: Place;
+  place_id: string;
 }
-const CommentRatingForm: FC<CommentRatingFormProps> = ({ place }) => {
+const CommentRatingForm: FC<CommentRatingFormProps> = ({ place_id }) => {
   const { createRating } = useRating();
-  const { data } = useGetRating(place.price_place_id ?? "");
+  const { data } = useGetRating(place_id ?? "");
 
   const {
     register,
@@ -40,7 +40,7 @@ const CommentRatingForm: FC<CommentRatingFormProps> = ({ place }) => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     createRating({
       comments: data.comments,
-      place_id: place.price_place_id!,
+      place_id: place_id!,
       rating: data.rating[0],
     });
   };

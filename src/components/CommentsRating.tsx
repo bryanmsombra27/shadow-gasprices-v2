@@ -3,14 +3,14 @@ import { FaRegComments } from "react-icons/fa";
 import CustomDialog from "./CustomDialog";
 import { DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import Login from "@/pages/Login";
-import type { GasStation, Place } from "@/interfaces/gas_station.interface";
 import { useauthStore } from "@/store/auth";
 import { CommentsRatingForm, Spinner } from ".";
 
 interface CommentsRatingProps {
-  place: Place;
+  name: string;
+  place_id: string;
 }
-const CommentsRating: FC<CommentsRatingProps> = ({ place }) => {
+const CommentsRating: FC<CommentsRatingProps> = ({ name, place_id }) => {
   const { authState } = useauthStore();
 
   return (
@@ -36,9 +36,9 @@ const CommentsRating: FC<CommentsRatingProps> = ({ place }) => {
         <>
           <div className="flex flex-col mx-auto mt-5">
             <DialogTitle className="font-bold text-2xl text-center">
-              gasolinera {place.name}
+              gasolinera {name}
             </DialogTitle>
-            <CommentsRatingForm place={place} />
+            <CommentsRatingForm place_id={place_id} />
           </div>
         </>
       )}
