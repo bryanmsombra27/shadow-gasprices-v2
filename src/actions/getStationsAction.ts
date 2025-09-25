@@ -1,5 +1,6 @@
 import type {
   AllGasStationResponse,
+  GasStationByRatingResponse,
   GasStationResponse,
 } from "@/interfaces/gas_station.interface";
 import type { Pagination } from "@/interfaces/pagination";
@@ -18,17 +19,32 @@ export const getGasStationAction = async (
 export const getAllGasStaionAction = async (
   pagination?: Pagination
 ): Promise<AllGasStationResponse> => {
-  const endpoint = "/zones";
+  let endpoint = "/zones";
 
   if (pagination?.page && pagination?.search) {
-    endpoint.concat(`?page=${pagination.page}&search=${pagination.search}`);
-  } else if (pagination?.page) {
-    endpoint.concat(`?page=${pagination.page}`);
-  } else if (pagination?.search) {
-    endpoint.concat(`?search=${pagination.search}`);
+    endpoint = endpoint.concat(
+      `?page=${pagination.page}&search=${pagination.search}`
+    );
+  }
+
+  if (pagination?.page) {
+    endpoint = endpoint.concat(`?page=${pagination.page}`);
+  }
+
+  if (pagination?.search) {
+    endpoint = endpoint.concat(`?search=${pagination.search}`);
   }
 
   const { data } = await gasapi.get<AllGasStationResponse>(endpoint);
 
   return data;
 };
+
+export const getGaSationByRatingAction =
+  async (): Promise<GasStationByRatingResponse> => {
+    const { data } = await gasapi.get<GasStationByRatingResponse>(
+      "/location/top"
+    );
+
+    return data;
+  };

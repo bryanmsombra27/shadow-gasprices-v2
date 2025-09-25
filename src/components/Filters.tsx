@@ -4,21 +4,31 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BiWorld } from "react-icons/bi";
 import { GrMapLocation } from "react-icons/gr";
 import { FaVoteYea } from "react-icons/fa";
+import { usefiltersStore, type FilterState } from "@/store/filters";
 interface FiltersProps {}
 const Filters: FC<FiltersProps> = ({}) => {
+  const { setType, type } = usefiltersStore();
+
+  const setFilterType = (type: FilterState) => {
+    setType(type);
+  };
+
   return (
     <ToggleGroup
       type="single"
       size="lg"
-      className=" w-[500px]    "
+      className=" md:w-[500px]   flex-col  w-full md:flex-row"
       variant="default"
     >
       <ToggleGroupItem
         value="bold"
-        className="w-full text-md px-2 data-[state=on]:text-primary-foreground  data-[state=on]:bg-primary cursor-pointer"
+        className={`w-full text-md px-2 data-[state=on]:text-primary-foreground  data-[state=on]:bg-primary cursor-pointer ${
+          type == "location" ? "text-primary-foreground  bg-primary" : ""
+        } `}
         variant="default"
         size="lg"
         aria-label="Toggle bold"
+        onClick={() => setFilterType("location")}
       >
         <GrMapLocation
           size={24}
@@ -31,7 +41,10 @@ const Filters: FC<FiltersProps> = ({}) => {
         size={"lg"}
         variant="default"
         aria-label="Toggle italic"
-        className="w-full text-md px-2 data-[state=on]:text-primary-foreground  data-[state=on]:bg-primary cursor-pointer"
+        onClick={() => setFilterType("all")}
+        className={`w-full text-md px-2 data-[state=on]:text-primary-foreground  data-[state=on]:bg-primary cursor-pointer ${
+          type == "all" ? "text-primary-foreground  bg-primary" : ""
+        } `}
       >
         <BiWorld />
         Todas
@@ -40,31 +53,17 @@ const Filters: FC<FiltersProps> = ({}) => {
         size={"lg"}
         variant="default"
         value="strikethrough"
+        onClick={() => setFilterType("top")}
         aria-label="Toggle strikethrough"
-        className="w-full text-md px-2 data-[state=on]:text-primary-foreground  data-[state=on]:bg-primary cursor-pointer"
+        className={`w-full text-md px-2 data-[state=on]:text-primary-foreground  data-[state=on]:bg-primary cursor-pointer ${
+          type == "top" ? "text-primary-foreground  bg-primary" : ""
+        } `}
       >
         <FaVoteYea />
         Mejor votadas
       </ToggleGroupItem>
     </ToggleGroup>
   );
-
-  //   return (
-  //     <div className="flex gap-6">
-  //       <div className="flex items-center gap-1 bg-red-500 rounded-tl-lg rounded-bl-lg p-2">
-  //         <GrMapLocation />
-  //         <span>Mas cercanas</span>
-  //       </div>
-  //       <div className="flex items-center gap-1">
-  //         <BiWorld />
-  //         <span>Todas</span>
-  //       </div>
-  //       <div className="flex items-center gap-1">
-  //         <FaVoteYea />
-  //         <span>Mejor votadas</span>
-  //       </div>
-  //     </div>
-  //   );
 };
 
 export default Filters;

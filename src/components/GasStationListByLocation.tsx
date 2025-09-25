@@ -1,6 +1,11 @@
 import useGasStations from "@/hooks/useGasStations";
 import { useEffect, type FC } from "react";
-import { CustomAlert, CustomTable, Spinner } from "@/components";
+import {
+  CurrentLocation,
+  CustomAlert,
+  CustomTable,
+  Spinner,
+} from "@/components";
 
 interface GasStationListByLocationProps {
   location: number[];
@@ -30,6 +35,10 @@ const GasStationListByLocation: FC<GasStationListByLocationProps> = ({
 
   return (
     <>
+      <div className="flex my-10 mx-auto justify-end container px-20 ">
+        <CurrentLocation />
+      </div>
+
       <h1 className="text-3xl font-bold text-center my-10">
         Gasolineras cerca de ti
       </h1>

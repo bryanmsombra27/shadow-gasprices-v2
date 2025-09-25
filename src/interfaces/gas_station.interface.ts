@@ -40,3 +40,15 @@ export interface Price {
   diesel: number | null;
   place_id: string;
 }
+export interface GasStationByRatingResponse {
+  stations: Station[];
+}
+
+export interface Station {
+  name: string;
+  place_id: string;
+  regular: number | null;
+  premium: number;
+  diesel: number | null;
+  avg_rating: string;
+}
